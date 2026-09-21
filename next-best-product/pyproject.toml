@@ -1,0 +1,20 @@
+[project]
+name = "next-best-product"
+version = "0.1.0"
+description = "Next-best-product recommendation for trip, taxi and food delivery"
+authors = [
+    { name = "Anh Minh", email = "1phamminh0811@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "scipy>=1.15.3",
+    "pandas>=2.2.0",
+    "numpy>=1.26.4",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.12.2",
+    "kagglehub>=1.0.2",
+    "pyspark>=4.2.0",
+]
+
+[tool.uv]
+package = false
