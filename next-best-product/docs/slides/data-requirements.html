@@ -1,0 +1,18 @@
+<section id="data-requirements" data-transition="fade" style="display:flex; flex-direction:column; gap:36px; padding:128px 128px 160px; background:#fbfbf8">
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#b45309">01 · Khung công nghệ chung</p>
+    <h2 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:56px; font-weight:700; line-height:1.15; color:#14213d">Mỗi họ mô hình cần một loại data field khác nhau</h2>
+  </div>
+  <table style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:25px; color:#3f4a5c; border:1px solid #e4e0d3">
+    <tr style="background:#14213d"><th style="padding:20px 24px; width:24%; color:#fbfbf8">Kỹ thuật</th><th style="padding:20px 24px; width:38%; color:#fbfbf8">Field bắt buộc</th><th style="padding:20px 24px; width:38%; color:#fbfbf8">Vì sao cần</th></tr>
+    <tr style="background:#fbfbf8"><td style="padding:20px 24px">Collaborative Filtering<br>(MF / ALS / BPR)</td><td style="padding:20px 24px">user_id, item_id, implicit (click/book/count) hoặc explicit (rating)</td><td style="padding:20px 24px">Học latent factor cần đủ dense interaction giữa user–item</td></tr>
+    <tr style="background:#f1eee5"><td style="padding:20px 24px">Content-based</td><td style="padding:20px 24px">Đặc tính item: category, giá, vị trí, review</td><td style="padding:20px 24px">Bù cho item mới / ít tương tác (cold-start item)</td></tr>
+    <tr style="background:#fbfbf8"><td style="padding:20px 24px">Session / Sequence<br>(GRU4Rec, SASRec, TiSASRec)</td><td style="padding:20px 24px">Chuỗi tương tác nhóm theo session (gap giữa các lượt, hoặc theo ngày/chuyến đi) + thứ tự thời gian — vì hiếm khi có session_id sẵn</td><td style="padding:20px 24px">Học đúng trình tự hành vi trong một session, để dự đoán bước tiếp theo hoặc tìm item có hành vi tương đồng</td></tr>
+    <tr style="background:#f1eee5"><td style="padding:20px 24px">Context-aware<br>(gắn thêm vào CF/Session)</td><td style="padding:20px 24px">Feature theo mỗi lượt: số người (srch_adults/children_cnt), mùa (srch_ci), loại chuyến (is_package) — nối vào input CF/Session</td><td style="padding:20px 24px">Cùng user nhưng đi solo/gia đình, mùa khác nhau sẽ chọn khác nhau — CF/Session thuần không phân biệt được</td></tr>
+    <tr style="background:#fbfbf8"><td style="padding:20px 24px">LLM-based reranking</td><td style="padding:20px 24px">Candidate list (id) + text/metadata mô tả + context</td><td style="padding:20px 24px">Rerank ở tầng cuối, cần input dạng text mô tả được</td></tr>
+  </table>
+  <div style="position:absolute; right:128px; bottom:64px; left:128px; display:flex; flex-direction:row; align-items:center; justify-content:space-between">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">01 · Khung công nghệ chung</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">Next-Best-Product · Sprint 1</p>
+  </div>
+</section>

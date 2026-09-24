@@ -1,0 +1,42 @@
+<section id="eda-context" data-transition="fade" style="display:flex; flex-direction:column; gap:32px; padding:128px 128px 160px; background:#fbfbf8">
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#0f766e">03 · EDA — Đề tài 1 (Expedia)</p>
+    <h2 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:48px; font-weight:700; line-height:1.15; color:#14213d">EDA #3 — Context có sẵn, cần chọn đúng định nghĩa "session"</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:32px; flex:1">
+    <div style="display:flex; flex-direction:column; gap:14px; flex:1; padding:32px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <h3 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:26px; font-weight:600; color:#14213d">Chia ngữ cảnh chuyến đi bằng rule</h3>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c">Rule: solo (1 adult, 0 con) · couple (2 adults, 0 con) · family (≥1 con hoặc ≥3 adults) — tính trên toàn bộ 37.67M dòng.</p>
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <div style="display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:12px 18px; background:#fbfbf8; border-radius:10px">
+          <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#14213d">Solo (1 người, 0 trẻ em)</p>
+          <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#0f766e">18.64% · booking 12.36%</p>
+        </div>
+        <div style="display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:12px 18px; background:#fbfbf8; border-radius:10px">
+          <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#14213d">Couple (2 người, 0 trẻ em)</p>
+          <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#0f766e">51.00% · booking 6.87%</p>
+        </div>
+        <div style="display:flex; flex-direction:row; align-items:center; justify-content:space-between; padding:12px 18px; background:#fbfbf8; border-radius:10px">
+          <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#14213d">Family (≥1 trẻ em hoặc ≥3 người)</p>
+          <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#0f766e">30.18% · booking 7.11%</p>
+        </div>
+      </div>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c">→ Solo chốt cao gấp ~1.8 lần couple/family (12.36% vs 6.87–7.11%), dù chỉ chiếm 18.64% lượt search. Vấn đề: rule chỉ biết <b>số lượng</b>, không biết <b>mối quan hệ</b> (2 người có thể là couple hoặc đồng nghiệp).</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:20px; flex:1; padding:36px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <h3 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:28px; font-weight:600; color:#14213d">Không có session_id — so 3 cách dựng session (37.67M dòng)</h3>
+      <table style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#3f4a5c; border:1px solid #e4e0d3">
+        <tr style="background:#14213d"><th style="padding:16px 18px; width:46%; color:#fbfbf8">Định nghĩa</th><th style="padding:16px 18px; width:27%; color:#fbfbf8">Số nhóm</th><th style="padding:16px 18px; width:27%; color:#fbfbf8">% có booking</th></tr>
+        <tr style="background:#fbfbf8"><td style="padding:16px 18px">Theo dòng (raw)</td><td style="padding:16px 18px">37,670,293</td><td style="padding:16px 18px">7.97%</td></tr>
+        <tr style="background:#fbfbf8"><td style="padding:16px 18px">Theo ngày (calendar-day)</td><td style="padding:16px 18px">9,923,555</td><td style="padding:16px 18px">25.78%</td></tr>
+        <tr style="background:#fbfbf8"><td style="padding:16px 18px">Gap 30 phút (inactivity)</td><td style="padding:16px 18px">12,242,331</td><td style="padding:16px 18px">21.7%</td></tr>
+        <tr style="background:#fbfbf8"><td style="padding:16px 18px">Journey (destination + ngày)</td><td style="padding:16px 18px">13,741,854</td><td style="padding:16px 18px">21.1%</td></tr>
+      </table>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#3f4a5c">→ Tỷ lệ chốt trong một "chuyến nghiên cứu" (21–26%) cao hơn hẳn tỷ lệ chốt theo dòng (7.97%) — booking thường đến sau nhiều lượt xem.</p>
+    </div>
+  </div>
+  <div style="position:absolute; right:128px; bottom:64px; left:128px; display:flex; flex-direction:row; align-items:center; justify-content:space-between">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">03 · EDA — Đề tài 1</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">Next-Best-Product · Sprint 1</p>
+  </div>
+</section>

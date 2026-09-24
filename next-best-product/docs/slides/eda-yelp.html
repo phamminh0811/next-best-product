@@ -1,0 +1,57 @@
+<section id="eda-yelp" data-transition="fade" style="display:flex; flex-direction:column; gap:22px; padding:128px 128px 160px; background:#fbfbf8">
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#b45309">04 · EDA — Đề tài 2</p>
+    <h2 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:40px; font-weight:700; line-height:1.15; color:#14213d">EDA — Yelp Open Dataset</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:16px">
+    <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:16px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:32px; font-weight:700; color:#14213d">52,268</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.15; color:#3f4a5c">nhà hàng (34.8% tổng business)</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:16px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:32px; font-weight:700; color:#14213d">4.72M</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.15; color:#3f4a5c">review gắn với nhà hàng (67.6%)</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:16px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:32px; font-weight:700; color:#14213d">3.79★</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.15; color:#3f4a5c">rating TB — phân phối cân bằng</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:16px; background:#14213d; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:32px; font-weight:700; color:#f2b155">838,998</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.15; color:#c7ceda">user chỉ review 1 quán (58%) — cold-start</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:16px; background:#14213d; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:32px; font-weight:700; color:#f2b155">98.15%</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.15; color:#c7ceda">nhà hàng có check-in (8.5M timestamp)</p>
+    </div>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:10px; flex:1">
+    <h3 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; font-weight:600; color:#14213d">Finding về dataset</h3>
+    <div style="display:grid; gap:16px; grid-template-columns:1fr 1fr; grid-template-rows:auto auto; flex:1">
+      <div style="display:flex; flex-direction:row; gap:12px; align-items:center; padding:18px; background:#fbfbf8; border:1px solid #e4e0d3; border-radius:14px">
+        <x-icon name="CheckCircle" style="width:24px; height:26px; flex:0 0 auto; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.25; color:#3f4a5c">Rating cân bằng: 1★12%, 2★8.6%, 3★11.5%, 4★23.9%, 5★44% — không lệch dương cực đoan</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:12px; align-items:center; padding:18px; background:#fbfbf8; border:1px solid #e4e0d3; border-radius:14px">
+        <x-icon name="CheckCircle" style="width:24px; height:26px; flex:0 0 auto; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.25; color:#3f4a5c"><b>lat/long thật</b> (27.56–53.68 lat, khớp với vị trí địa lý thật) — có thể dễ dàng kiểm tra mối quan hệ địa lý giữa khoảng cách và gợi ý</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:12px; align-items:center; padding:18px; background:#fbfbf8; border:1px solid #e4e0d3; border-radius:14px">
+        <x-icon name="Warning" style="width:26px; height:26px; color:#b45309"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.25; color:#3f4a5c">Check-in lệch <b>tối muộn</b> (22h–1h ≈28% tổng check-in) — chưa chắc phản ánh đúng "giờ ăn"</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:12px; align-items:center; padding:18px; background:#fbfbf8; border:1px solid #e4e0d3; border-radius:14px">
+        <x-icon name="Warning" style="width:24px; height:26px; flex:0 0 auto; color:#b45309"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.25; color:#3f4a5c"><b>attributes.*</b>/<b>categories</b> khá hỗn loạn — mỗi business là một list category, cần phân tách và xử lý phù hợp trước khi dùng</p>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:16px; align-items:center; padding:18px 36px; background:#14213d; border-radius:16px">
+    <x-icon name="Chart" style="width:26px; height:26px; color:#f2b155"></x-icon>
+    <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#fbfbf8">Vị trí thật + rating ít lệch + cold-start pool khổng lồ (839K user) → phù hợp target cho Content-based + Context-aware</p>
+  </div>
+  <div style="position:absolute; right:128px; bottom:64px; left:128px; display:flex; flex-direction:row; align-items:center; justify-content:space-between">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">04 · EDA — Đề tài 2</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">Next-Best-Product · Sprint 1</p>
+  </div>
+</section>

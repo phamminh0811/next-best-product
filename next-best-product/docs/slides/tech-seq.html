@@ -1,0 +1,31 @@
+<section id="tech-seq" data-transition="fade" style="background:#FBFBF8; color:#14213D; font-family:'IBM Plex Sans', Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:36px">
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; letter-spacing:3px; text-transform:uppercase; color:#B45309; font-weight:500">01 · Khung công nghệ chung</p>
+    <h2 style="font-size:56px; font-weight:700; line-height:1.15; color:#14213D">Công nghệ áp dụng (2/2) — sequence model &amp; rerank</h2>
+  </div>
+  <div style="display:flex; gap:24px; flex:1">
+    <div style="flex:1; background:#F1EEE5; border:1px solid #E4E0D3; border-radius:16px; padding:36px; display:flex; flex-direction:column; gap:16px">
+      <h3 style="font-size:30px; font-weight:600; color:#14213D">GRU4Rec</h3>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#B45309">Input:</b> chuỗi item user tương tác theo thời gian trong một session</p>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#B45309">Output:</b> phân phối xác suất cho item tiếp theo</p>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#B45309">Sơ lược:</b> đưa từng item qua mạng hồi quy (GRU); hidden state tích luỹ "ngữ cảnh" của session tới thời điểm hiện tại.</p>
+    </div>
+    <div style="flex:1; background:#F1EEE5; border:1px solid #E4E0D3; border-radius:16px; padding:36px; display:flex; flex-direction:column; gap:16px">
+      <h3 style="font-size:30px; font-weight:600; color:#14213D">SASRec</h3>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#0F766E">Input:</b> cũng là chuỗi item theo thời gian</p>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#0F766E">Output:</b> phân phối xác suất cho item tiếp theo</p>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#0F766E">Sơ lược:</b> dùng self-attention (như Transformer) nhìn toàn bộ chuỗi một lúc, tự học item nào trong quá khứ quan trọng nhất — bắt pattern dài hạn tốt hơn GRU4Rec.</p>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#0F766E">Biến thể TiSASRec:</b> thêm khoảng thời gian thực giữa các lượt vào self-attention — hữu ích khi 2 search cách nhau vài phút và vài tuần cần được phân biệt.</p>
+    </div>
+    <div style="flex:1; background:#F1EEE5; border:1px solid #E4E0D3; border-radius:16px; padding:36px; display:flex; flex-direction:column; gap:16px">
+      <h3 style="font-size:30px; font-weight:600; color:#14213D">LLM-based reranking</h3>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#B45309">Input:</b> top-N candidate từ model retrieval rẻ (CF) + metadata/context dạng text</p>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#B45309">Output:</b> danh sách được sắp lại theo độ phù hợp</p>
+      <p style="font-size:24px; line-height:1.45; color:#3F4A5C"><b style="color:#B45309">Sơ lược:</b> dùng ở bước cuối, không thay thế retrieval — chỉ tinh chỉnh thứ tự trên một tập nhỏ đã lọc trước.</p>
+    </div>
+  </div>
+  <div style="position:absolute; left:128px; right:128px; bottom:64px; display:flex; justify-content:space-between; align-items:center">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6B7280">01 · Khung công nghệ chung</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6B7280">Next-Best-Product · Sprint 1</p>
+  </div>
+</section>

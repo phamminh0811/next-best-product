@@ -1,0 +1,43 @@
+<section id="dataset-choice" data-transition="fade" style="display:flex; flex-direction:column; gap:36px; padding:128px 128px 160px; background:#fbfbf8">
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#0f766e">03 · Vì sao chọn Expedia</p>
+    <h2 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:56px; font-weight:700; line-height:1.15; color:#14213d">Vì sao chọn Expedia làm dataset</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:32px; flex:1">
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:40px; background:#14213d; border-radius:20px">
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:#f2b155">Schema</p>
+      <h3 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:34px; font-weight:700; color:#fbfbf8">Expedia Hotel Recommendations</h3>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.5; color:#bfc8d6">Log search / click / book thật từ Expedia.</p>
+      <ul style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.6; color:#c7ceda">
+        <li><b>train.csv:</b> date_time, user_id, srch_ci/co, srch_adults/children/rm_cnt, is_package, is_booking, cnt, hotel_continent/country/market, hotel_cluster (0-99)</li>
+        <li><b>destinations.csv:</b> 149 latent feature/destination trích từ review text</li>
+      </ul>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:18px; flex:1; padding:40px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:20px">
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:#b45309">Lý do chọn</p>
+      <div style="display:flex; flex-direction:row; gap:14px; align-items:start">
+        <x-icon name="CheckCircle" style="width:24px; height:29px; flex:0 0 auto; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#3f4a5c">Log thật, quy mô lớn (37.67M dòng, 1.2M user) — đủ để train nhiều họ mô hình trong cùng một sprint</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:14px; align-items:start">
+        <x-icon name="CheckCircle" style="width:24px; height:30px; flex:0 0 auto; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#3f4a5c">Field có sẵn context (số người, ngày book, package) — không cần enrich thêm để test context-aware</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:14px; align-items:start">
+        <x-icon name="CheckCircle" style="width:24px; height:30px; flex:0 0 auto; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#3f4a5c">Có sẵn ma trận user × hotel_cluster (qua is_booking) để làm CF ngay; đồng thời tách được click/book trong cùng luồng → dựng được session hành động của user</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:14px; align-items:start">
+        <x-icon name="CheckCircle" style="width:26px; height:26px; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#3f4a5c">Dữ liệu có tính sparse / cold-start</p>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex; flex-direction:column; padding:24px 40px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+    <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#3f4a5c">Yelp Open Dataset (Đề tài 2) được phân tích riêng ở phần sau — dùng làm dataset dự phòng nếu domain Hotel/Travel bị trùng với nhóm khác.</p>
+  </div>
+  <div style="position:absolute; right:128px; bottom:64px; left:128px; display:flex; flex-direction:row; align-items:center; justify-content:space-between">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">03 · Vì sao chọn Expedia</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">Next-Best-Product · Sprint 1</p>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+<section id="eda-scale" data-transition="fade" style="background:#fbfbf8">
+  <div id="e1-160150s" style="position:absolute; right:128px; bottom:64px; left:128px; display:flex; flex-direction:row; align-items:center; justify-content:space-between">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">03 · EDA — Đề tài 1</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">Next-Best-Product · Sprint 1</p>
+  </div>
+  <div id="318429df" style="position:absolute; top:128px; left:128px; width:1664px; height:106px; display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#0f766e">03 · EDA — Đề tài 1 (Expedia)</p>
+    <h2 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:56px; font-weight:700; line-height:1.15; color:#14213d">EDA #1 — Quy mô lớn, nhưng feedback tích cực rất hiếm</h2>
+  </div>
+  <div id="5f509552" style="position:absolute; top:274px; left:128px; width:1664px; height:240px; display:flex; flex-direction:row; gap:24px">
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:32px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:72px; font-weight:700; color:#14213d">37.67M</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.35; color:#3f4a5c">dòng log search/click/book (train.csv, 24 cột)</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:32px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:72px; font-weight:700; color:#14213d">1.2M</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.35; color:#3f4a5c">user_id riêng biệt (1,198,786)</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:32px; background:#14213d; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:72px; font-weight:700; color:#f2b155">7.97%</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.35; color:#c7ceda">tỷ lệ is_booking = 1 trên toàn bộ dòng</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; flex:1; padding:32px; background:#14213d; border-radius:16px">
+      <p style="font-family:'JetBrains Mono', monospace; font-size:72px; font-weight:700; color:#f2b155">32.1%</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.35; color:#c7ceda">user chưa từng book — chỉ click</p>
+    </div>
+  </div>
+  <div id="e2cd8502" style="position:absolute; top:554px; left:128px; width:1664px; height:196px; display:flex; flex-direction:column; gap:12px">
+    <h3 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:28px; font-weight:600; color:#14213d">Chất lượng dữ liệu cần xử lý trước khi model</h3>
+    <div style="display:flex; flex-direction:row; gap:24px; min-width:1664px; min-height:151px">
+      <div style="display:flex; flex-direction:row; gap:16px; align-items:center; flex:1; padding:24px; background:#fbfbf8; border:1px solid #e4e0d3; border-radius:14px">
+        <x-icon name="Warning" style="width:24px; height:28px; flex:0 0 auto; color:#b45309"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#3f4a5c">35.9% dòng thiếu <b>orig_destination_distance</b> (13.53M / 37.67M)</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:16px; align-items:center; flex:1; padding:24px; background:#fbfbf8; border:1px solid #e4e0d3; border-radius:14px">
+        <x-icon name="Warning" style="width:24px; height:28px; flex:0 0 auto; color:#b45309"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#3f4a5c">145,602 dòng có booking duration không hợp lệ (0 hoặc âm)</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:16px; align-items:center; flex:1; min-width:539px; min-height:151px; padding:24px; background:#fbfbf8; border:1px solid #e4e0d3; border-radius:14px">
+      </div>
+    </div>
+  </div>
+  <x-icon name="Warning" id="05d7c43c" style="position:absolute; top:656.02px; left:1275.73px; width:24px; height:31.98px; color:#b45309"></x-icon>
+  <p id="0025d9c6" style="position:absolute; top:641px; left:1308px; width:459px; font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#3f4a5c">srch_ci/srch_co lỗi tới năm 2558 — cần clean trước khi dùng làm feature thời gian</p>
+</section>

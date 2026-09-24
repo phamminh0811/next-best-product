@@ -1,0 +1,41 @@
+<section id="dataset-choice-food" data-transition="fade" style="display:flex; flex-direction:column; gap:28px; padding:128px 128px 160px; background:#fbfbf8">
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#0f766e">04 · Vì sao chọn Yelp</p>
+    <h2 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:44px; font-weight:700; line-height:1.15; color:#14213d">Vì sao chọn Yelp — đối chiếu với yêu cầu bài toán</h2>
+  </div>
+  <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c">Bài toán cần: gợi ý quán theo <b>vị trí</b>, <b>khung giờ ăn</b>, đánh giá được bằng <b>tín hiệu thật</b>, và biết <b>ai đi cùng ai</b>.</p>
+  <div style="display:flex; flex-direction:row; gap:28px; flex:1">
+    <div style="display:flex; flex-direction:column; gap:12px; flex:1; padding:30px; background:#14213d; border-radius:20px">
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:#f2b155">Schema (scope: Restaurants)</p>
+      <ul style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.4; color:#c7ceda">
+        <li><b>business.json:</b> 52,268/150,346 là nhà hàng (34.8%), lat/long thật</li>
+        <li><b>review.json:</b> 4.72M/6.99M review (67.6%) — mỗi review có stars + text</li>
+        <li><b>user.json:</b> 1.45M user đã review ≥1 nhà hàng</li>
+        <li><b>checkin.json:</b> 8.5M timestamp — 98.15% nhà hàng có check-in</li>
+      </ul>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; flex:1; padding:30px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:20px">
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:#b45309">Đối chiếu yêu cầu</p>
+      <div style="display:flex; flex-direction:row; gap:12px; align-items:start">
+        <x-icon name="CheckCircle" style="width:24px; height:26px; flex:0 0 auto; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Vị trí:</b> toạ độ thật (27.56–53.68 lat, khớp với thông tin địa lý sẵn có trong mô tả)</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:12px; align-items:start">
+        <x-icon name="CheckCircle" style="width:24px; height:31px; flex:0 0 auto; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Giờ ăn:</b> check-in phủ 98.15% — nhưng lệch tối muộn (22h-1h ~28%), cần validate trước khi coi là "giờ ăn"</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:12px; align-items:start">
+        <x-icon name="CheckCircle" style="width:24px; height:28px; flex:0 0 auto; color:#0f766e"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Tín hiệu thật:</b> tỷ lệ rating cân bằng, 838,998 user (58%) mới — cold-start pool lớn</p>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:12px; align-items:start">
+        <x-icon name="Warning" style="width:24px; height:26px; flex:0 0 auto; color:#b45309"></x-icon>
+        <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Gap:</b> không có field số người đi cùng — cần bỏ qua hoặc suy luận gián tiếp từ review text</p>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute; right:128px; bottom:64px; left:128px; display:flex; flex-direction:row; align-items:center; justify-content:space-between">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">04 · Vì sao chọn Yelp</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">Next-Best-Product · Sprint 1</p>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+<section id="tech-cf" data-transition="fade" style="background:#FBFBF8; color:#14213D; font-family:'IBM Plex Sans', Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:32px">
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; letter-spacing:3px; text-transform:uppercase; color:#B45309; font-weight:500">01 · Khung công nghệ chung</p>
+    <h2 style="font-size:52px; font-weight:700; line-height:1.15; color:#14213D">Công nghệ áp dụng (1/2) — CF &amp; context-aware</h2>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto auto; gap:24px; flex:1">
+    <div style="background:#F1EEE5; border:1px solid #E4E0D3; border-radius:16px; padding:28px; display:flex; flex-direction:column; gap:10px">
+      <h3 style="font-size:28px; font-weight:600; color:#14213D">Matrix Factorization / ALS</h3>
+      <p style="font-size:24px; line-height:1.35; color:#3F4A5C"><b style="color:#B45309">Input:</b> ma trận user × item, phần lớn rỗng</p>
+      <p style="font-size:24px; line-height:1.35; color:#3F4A5C"><b style="color:#B45309">Output:</b> vector ẩn (latent factor) cho mỗi user/item</p>
+      <p style="font-size:24px; line-height:1.35; color:#3F4A5C"><b style="color:#B45309">Sơ lược:</b> tách 1 bảng đánh giá phim (nhiều ô trống) thành 2 bảng nhỏ — "gu" người dùng và "đặc điểm" phim; nhân lại xấp xỉ ô đã biết, tính được cả ô còn trống.</p>
+      <p style="font-size:24px; line-height:1.35; color:#3F4A5C"><b style="color:#B45309">Ví dụ:</b> A có gu-hài=0.9, phim X có đặc-hài=0.8 → dự đoán A chấm X ≈ 0.9×0.8=0.72, dù A chưa xem X.</p>
+    </div>
+    <div style="background:#F1EEE5; border:1px solid #E4E0D3; border-radius:16px; padding:32px; display:flex; flex-direction:column; gap:12px">
+      <h3 style="font-size:28px; font-weight:600; color:#14213D">BPR (Bayesian Personalized Ranking)</h3>
+      <p style="font-size:24px; line-height:1.4; color:#3F4A5C"><b style="color:#0F766E">Input:</b> cặp (item đã tương tác, item chưa thấy) lấy mẫu ngẫu nhiên</p>
+      <p style="font-size:24px; line-height:1.4; color:#3F4A5C"><b style="color:#0F766E">Output:</b> latent factor, tối ưu theo đúng thứ tự xếp hạng</p>
+      <p style="font-size:24px; line-height:1.4; color:#3F4A5C"><b style="color:#0F766E">Sơ lược:</b> học để item đã tương tác được xếp điểm cao hơn item ngẫu nhiên — phù hợp implicit feedback.</p>
+    </div>
+    <div style="background:#F1EEE5; border:1px solid #E4E0D3; border-radius:16px; padding:32px; display:flex; flex-direction:column; gap:12px">
+      <h3 style="font-size:28px; font-weight:600; color:#14213D">item2vec</h3>
+      <p style="font-size:24px; line-height:1.4; color:#3F4A5C"><b style="color:#B45309">Input:</b> chuỗi item cùng xuất hiện trong một session/lịch sử user</p>
+      <p style="font-size:24px; line-height:1.4; color:#3F4A5C"><b style="color:#B45309">Output:</b> embedding cho mỗi item</p>
+      <p style="font-size:24px; line-height:1.4; color:#3F4A5C"><b style="color:#B45309">Sơ lược:</b> coi item như "từ", session như "câu"; dùng word2vec để item hay đi cùng nhau có embedding gần nhau.</p>
+    </div>
+    <div style="background:#14213D; border-radius:16px; padding:32px; display:flex; flex-direction:column; gap:12px">
+      <h3 style="font-size:28px; font-weight:600; color:#FBFBF8">DeepFM (context-aware)</h3>
+      <p style="font-size:24px; line-height:1.4; color:#C7CEDA"><b style="color:#F2B155">Input:</b> user × item như MF, cộng thêm mọi feature context theo lượt (số người, mùa, gói...)</p>
+      <p style="font-size:24px; line-height:1.4; color:#C7CEDA"><b style="color:#F2B155">Output:</b> điểm dự đoán tương tác/booking theo đúng ngữ cảnh đó</p>
+      <p style="font-size:24px; line-height:1.4; color:#C7CEDA"><b style="color:#F2B155">Sơ lược:</b> 2 nhánh dùng chung embedding — Factorization Machine học tương tác bậc 2 (như MF mở rộng), Deep Network học tương tác phi tuyến giữa các feature — cộng lại thành 1 điểm. Cách chuẩn để đưa context vào CF.</p>
+    </div>
+  </div>
+  <div style="position:absolute; left:128px; right:128px; bottom:64px; display:flex; justify-content:space-between; align-items:center">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6B7280">01 · Khung công nghệ chung</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6B7280">Next-Best-Product · Sprint 1</p>
+  </div>
+</section>

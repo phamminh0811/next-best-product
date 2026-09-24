@@ -1,0 +1,40 @@
+{
+  "v": 4,
+  "createdOnFiles": { "v": 1, "at": "2026-09-18T09:00:00Z" },
+  "title": "Phân tích đề tài & chọn dataset",
+  "cover": "cover",
+  "order": [
+    "cover",
+    "data-requirements",
+    "tech-cf",
+    "tech-seq",
+    "domain-problem",
+    "domain-problem-food",
+    "dataset-choice",
+    "eda-scale",
+    "eda-new-users",
+    "eda-context",
+    "dataset-choice-food",
+    "eda-yelp",
+    "sprint-plan",
+    "sprint-baselines"
+  ],
+  "sections": {
+    "s1": { "description": "Khung công nghệ chung cho cả hai đề tài", "start": "data-requirements" },
+    "s2": { "description": "Đặc điểm domain của cả 2 đề tài", "start": "domain-problem" },
+    "s3": { "description": "Vì sao chọn Expedia + EDA Đề tài 1", "start": "dataset-choice" },
+    "s4": { "description": "Vì sao chọn Yelp + EDA Đề tài 2", "start": "dataset-choice-food" },
+    "s5": { "description": "Kế hoạch Sprint 1", "start": "sprint-plan" }
+  },
+  "faces": {
+    "ibm-plex-sans": {
+      "family": "IBM Plex Sans",
+      "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+    },
+    "jetbrains-mono": {
+      "family": "JetBrains Mono",
+      "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+    }
+  },
+  "designSystems": []
+}

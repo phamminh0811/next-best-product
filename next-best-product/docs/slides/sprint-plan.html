@@ -1,0 +1,34 @@
+<section id="sprint-plan" data-transition="fade" style="display:flex; flex-direction:column; gap:22px; padding:128px 128px 160px; background:#fbfbf8">
+  <div style="display:flex; flex-direction:column; gap:8px">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:#b45309">05 · Sprint 1 — Tuần 1</p>
+    <h2 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:46px; font-weight:700; line-height:1.15; color:#14213d">Tuần 1 — Chuẩn bị dữ liệu, protocol &amp; baseline đầu tiên</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:16px; align-items:center; padding:18px 36px; background:#14213d; border-radius:14px">
+    <x-icon name="Verified" style="width:26px; height:26px; color:#f2b155"></x-icon>
+    <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; color:#fbfbf8">Mục tiêu: hiểu dữ liệu, định nghĩa protocol đánh giá đúng cách (tránh leak), có baseline chạy riêng cho từng dataset — trọng tâm sprint vẫn là Expedia, Yelp xử lý song song nhưng tách biệt.</p>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:14px; align-items:start; padding:18px 28px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:14px">
+    <x-icon name="Check" style="width:26px; height:26px; color:#0f766e"></x-icon>
+    <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.35; color:#3f4a5c"><b>Đọc lý thuyết (áp dụng chung):</b> Popularity baseline, MF (ALS/BPR), implicit vs explicit feedback, recall@K/NDCG@K/coverage</p>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:20px; flex:1">
+    <div style="display:flex; flex-direction:column; gap:14px; flex:1; padding:28px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <h3 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:26px; font-weight:600; color:#0f766e">Expedia (Đề tài 1)</h3>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>EDA:</b> booking theo mùa, theo adults/children, sparsity ma trận user–hotel_cluster, chuỗi hành vi/user (đã hoàn thiện)</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Trip context:</b> rule solo/couple/family (đã validate bằng dữ liệu thật)</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Split dữ liệu:</b> time-based theo date_time (không random), giữ nguyên session trong một tập</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Baseline:</b> Most-popular hotel_cluster (global + theo từng trip context)</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px; flex:1; padding:28px; background:#f1eee5; border:1px solid #e4e0d3; border-radius:16px">
+      <h3 style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:26px; font-weight:600; color:#b45309">Yelp (Đề tài 2, dự phòng)</h3>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Scope:</b> lọc business có category "Restaurants" (52,268 / 150,346)</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>EDA:</b> rating cân bằng, 838,998 user cold-start (58%), check-in lệch tối muộn (đã hoàn thiện)</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Split dữ liệu:</b> giữ review gần nhất/user làm test, còn lại làm train</p>
+      <p style="font-family:'IBM Plex Sans', Arial, sans-serif; font-size:24px; line-height:1.3; color:#3f4a5c"><b>Baseline:</b> Popularity theo lượt review — chạy riêng, dùng làm mốc cho dataset dự phòng</p>
+    </div>
+  </div>
+  <div style="position:absolute; right:128px; bottom:64px; left:128px; display:flex; flex-direction:row; align-items:center; justify-content:space-between">
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">05 · Sprint 1 — Tuần 1</p>
+    <p style="font-family:'JetBrains Mono', monospace; font-size:24px; color:#6b7280">Next-Best-Product · Sprint 1</p>
+  </div>
+</section>
