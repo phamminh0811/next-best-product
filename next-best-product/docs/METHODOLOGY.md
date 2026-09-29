@@ -24,7 +24,7 @@ Sau khi tìm hiểu và phân tích các phương pháp SOTA hiện nay, các k�
 - **Graph-based**: biến đổi lịch sử tương tác của user thành một đồ thị (graph), rồi lan truyền thông tin qua nhiều bước để suy luận sở thích gián tiếp.
 - **Session-based**: ngược lại, chỉ nhìn vào chuỗi hành vi trong một phiên truy cập hiện tại, không cần biết lịch sử dài hạn hay danh tính cố định của user.
 
-Nhiều kỹ thuật huấn luyện quan trọng được sử dụng ở cả hai hướng tiếp cận nêu trên, chỉ khác nhau ở việc áp dụng lên loại dữ liệu nào. Ba kỹ thuật cốt lõi được trình bày dưới đây.
+Nhiều kỹ thuật huấn luyện quan trọng được sử dụng ở cả hai hướng tiếp cận nêu trên, chỉ khác nhau ở việc áp dụng lên loại dữ liệu nào. Ba kỹ thuật cốt lõi được trình bày dưới đây – lưu ý rằng đây không phải 3 kỹ thuật độc lập ngang hàng: Negative Sampling (2.1) là kỹ thuật nền, còn Contrastive Learning (2.2) và Sampled Softmax (2.3) đều xây dựng lại trên nền đó, cho hai mục đích khác nhau (học biểu diễn không nhãn, và tính hàm mất mát hiệu quả trên danh mục lớn).
 
 ### 2.1. Negative Sampling (lấy mẫu âm)
 
@@ -34,13 +34,13 @@ Negative sampling là kỹ thuật chọn ra một số lượng nhỏ khách s�
 
 ### 2.2. Contrastive Learning (học đối chiếu)
 
-Đây là cách huấn luyện mô hình mà không cần dữ liệu được gán nhãn sẵn. Ý tưởng cốt lõi: tạo ra hai phiên bản hơi khác nhau của cùng một dữ liệu gốc – ví dụ hai phiên bản hơi khác nhau của cùng một graph, hoặc hai session được biến đổi nhẹ – rồi huấn luyện mô hình nhận ra rằng hai phiên bản này vẫn đại diện cho "cùng một đối tượng", đồng thời phân biệt rõ với các đối tượng khác trong tập dữ liệu.
+Đây là cách huấn luyện mô hình mà không cần dữ liệu được gán nhãn sẵn. Ý tưởng cốt lõi: tạo ra hai phiên bản hơi khác nhau của cùng một dữ liệu gốc – ví dụ hai phiên bản hơi khác nhau của cùng một graph, hoặc hai session được biến đổi nhẹ – rồi huấn luyện mô hình nhận ra rằng hai phiên bản này vẫn đại diện cho "cùng một đối tượng" (kéo gần), đồng thời phân biệt rõ với các đối tượng khác trong tập dữ liệu (đẩy xa) – các đối tượng khác dùng để "đẩy xa" ở đây chính là mẫu âm lấy theo kỹ thuật negative sampling ở mục 2.1.
 
 Kỹ thuật này đặc biệt hữu ích khi dữ liệu tương tác thực tế có sẵn rất ít hoặc thưa thớt, như trong trường hợp đặt khách sạn, vì nó giúp mô hình học ra một biểu diễn ổn định cho từng người dùng và khách sạn, thay vì "học thuộc" theo từng chi tiết nhỏ lẻ của dữ liệu quan sát được, vốn dễ chứa nhiễu.
 
 ### 2.3. Sampled Softmax (hàm mất mát dạng softmax có lấy mẫu)
 
-Đây là một dạng hàm mất mát (loss function – thước đo sai số dùng để huấn luyện mô hình) kết hợp cả hai ý tưởng nêu trên. Thay vì so sánh điểm số của khách sạn đúng với toàn bộ danh mục khách sạn – điều rất tốn kém khi danh mục có hàng chục nghìn lựa chọn – Sampled Softmax chỉ so sánh với một tập nhỏ mẫu âm được lấy mẫu theo kỹ thuật negative sampling, dựa trên công thức toán của hàm softmax nhằm xác định lựa chọn nào có khả năng đúng cao nhất. Đây là kỹ thuật được nhiều nghiên cứu mới nhất trong giai đoạn 2025–2026 sử dụng, vừa đảm bảo độ chính xác cao, vừa giữ tốc độ huấn luyện hợp lý trên danh mục sản phẩm lớn.
+Đây không phải một kỹ thuật độc lập, mà là một dạng hàm mất mát (loss function – thước đo sai số dùng để huấn luyện mô hình) áp dụng lại kỹ thuật negative sampling ở mục 2.1 vào bên trong công thức softmax. Thay vì so sánh điểm số của khách sạn đúng với toàn bộ danh mục khách sạn – điều rất tốn kém khi danh mục có hàng chục nghìn lựa chọn – Sampled Softmax chỉ so sánh với khách sạn đúng cộng một tập nhỏ mẫu âm được lấy mẫu theo đúng kỹ thuật negative sampling, dựa trên công thức toán của hàm softmax nhằm xác định lựa chọn nào có khả năng đúng cao nhất. Đây là kỹ thuật được nhiều nghiên cứu mới nhất trong giai đoạn 2025–2026 sử dụng, vừa đảm bảo độ chính xác cao, vừa giữ tốc độ huấn luyện hợp lý trên danh mục sản phẩm lớn.
 
 ## 3. Nghiên cứu sâu 5 thuật toán cụ thể
 
