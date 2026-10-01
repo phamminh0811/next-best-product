@@ -8,12 +8,15 @@ authors = [
 requires-python = ">=3.10"
 dependencies = [
     "scipy>=1.15.3",
-    "pandas>=2.2.0",
+    "pandas>=2.2.0,<3",  # PySpark 4.2 does not fully support pandas 3 yet
     "numpy>=1.26.4",
     "matplotlib>=3.8.0",
     "seaborn>=0.12.2",
     "kagglehub>=1.0.2",
     "pyspark>=4.2.0",
+    "pyarrow>=15.0.0",
+    "torch>=2.5.0",
+    "tqdm>=4.66.0",
 ]
 
 [tool.uv]
