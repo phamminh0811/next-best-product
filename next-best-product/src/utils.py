@@ -85,14 +85,19 @@ def train_epoch(model, optimizer, edge_users, edge_items, n_items, batch_size, g
 
 def topk_metrics(scores, labels, topks):
     """Per-user Recall@K and NDCG@K of the official metrics(): recall = hits / |labels|, NDCG normalized by
-    the ideal DCG of min(K, |labels|) items. scores (B x I) float, labels (B x I) bool; users without labels get NaN."""
+    the ideal DCG of min(K, |labels|) items; Precision@K = hits / K; HitRate@K = 1 if any label is in the top K;
+    MAP@K as Kaggle's apk (the Expedia competition metric is MAP@5): the sum over the hits in the top K of the precision
+    at their rank, divided by min(K, |labels|). scores (B x I) float, labels (B x I) bool; users without labels get NaN."""
     k_max = max(topks)
     discount = 1.0 / torch.log2(torch.arange(2, k_max + 2, device=scores.device, dtype=torch.float32))
     idcg = torch.cat([torch.zeros(1, device=scores.device), discount.cumsum(0)])
     hits = labels.gather(1, scores.topk(k_max, dim=1).indices).float()
     n_labels = labels.sum(1)
+    precision_at_rank = hits.cumsum(1) / torch.arange(1, k_max + 1, device=scores.device, dtype=torch.float32)
     out = {"n_labels": n_labels}
     for k in topks:
         out[f"recall@{k}"] = hits[:, :k].sum(1) / n_labels
         out[f"ndcg@{k}"] = (hits[:, :k] * discount[:k]).sum(1) / idcg[n_labels.clamp(max=k)]
+        out[f"hit@{k}"] = (hits[:, :k].sum(1) > 0).float().masked_fill(n_labels == 0, float("nan"))
+        out[f"map@{k}"] = (hits[:, :k] * precision_at_rank[:, :k]).sum(1) / n_labels.clamp(max=k)
     return out

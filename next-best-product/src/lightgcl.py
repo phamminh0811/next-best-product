@@ -4,12 +4,21 @@ import torch.nn.functional as F
 from utils import sparse_dropout
 
 
+def log_sum_exp(scores):
+    """log(sum(exp(scores), dim=1)), shifted by the row max so it cannot overflow. Overwrites scores in place, so the
+    batch x nodes matrix exists once (torch.logsumexp keeps about one more copy: +2.5 GiB on Expedia)."""
+    row_max = scores.max(dim=1, keepdim=True).values.detach()
+    return row_max.squeeze(1) + scores.sub_(row_max).exp_().sum(1).log()
+
+
 class LightGCL(nn.Module):
     """LightGCL (Cai et al., ICLR 2023), adapted from the official HKUDS/LightGCL code.
 
     The training loss is unchanged. Differences from the original: the test phase runs on any
     device and scores with the current parameters (predict / embeddings) instead of the embeddings
-    cached by the last training step, and the fixed graph tensors are buffers so .to(device) moves them.
+    cached by the last training step, the fixed graph tensors are buffers so .to(device) moves them, and
+    the contrastive denominators use a max-shifted log_sum_exp instead of log(sum(exp(.)) + 1e-8), which
+    overflows to inf once a score / temp passes ~88 (seen with the denoised view of radar.py on Expedia).
     """
 
     def __init__(self, n_u, n_i, d, u_mul_s, v_mul_s, ut, vt, train_csr, adj_norm, l, temp, lambda_1, lambda_2, dropout):
@@ -32,33 +41,36 @@ class LightGCL(nn.Module):
         self.lambda_2 = lambda_2
         self.dropout = dropout
 
-    def propagate(self, dropout):
-        """Layer-summed embeddings of the graph view (E_u, E_i) and of the SVD view (G_u, G_i)."""
+    def graph_layers(self, dropout):
+        """Per-layer embeddings of the graph view: lists of l + 1 user and item tensors, layer 0 first."""
         E_u_list, E_i_list = [self.E_u_0], [self.E_i_0]
-        G_u_list, G_i_list = [self.E_u_0], [self.E_i_0]
         for layer in range(1, self.l + 1):
             # GNN propagation
             Z_u = torch.spmm(sparse_dropout(self.adj_norm, dropout), E_i_list[layer - 1])
             Z_i = torch.spmm(sparse_dropout(self.adj_norm, dropout).transpose(0, 1), E_u_list[layer - 1])
-
-            # svd_adj propagation
-            vt_ei = self.vt @ E_i_list[layer - 1]
-            G_u_list.append(self.u_mul_s @ vt_ei)
-            ut_eu = self.ut @ E_u_list[layer - 1]
-            G_i_list.append(self.v_mul_s @ ut_eu)
-
-            # aggregate
             E_u_list.append(Z_u)
             E_i_list.append(Z_i)
+        return E_u_list, E_i_list
 
-        # aggregate across layers
-        return sum(E_u_list), sum(E_i_list), sum(G_u_list), sum(G_i_list)
+    def view(self, E_u_list, E_i_list):
+        """Layer-summed embeddings of the SVD view: layer l propagates layer l - 1 of the graph view over U S V^T."""
+        G_u_list, G_i_list = [E_u_list[0]], [E_i_list[0]]
+        for E_u, E_i in zip(E_u_list[:-1], E_i_list[:-1]):
+            G_u_list.append(self.u_mul_s @ (self.vt @ E_i))
+            G_i_list.append(self.v_mul_s @ (self.ut @ E_u))
+        return sum(G_u_list), sum(G_i_list)
+
+    def propagate(self, dropout):
+        """Layer-summed embeddings of the graph view (E_u, E_i) and of the contrastive view (G_u, G_i)."""
+        E_u_list, E_i_list = self.graph_layers(dropout)
+        G_u, G_i = self.view(E_u_list, E_i_list)
+        return sum(E_u_list), sum(E_i_list), G_u, G_i
 
     @torch.no_grad()
     def embeddings(self):
         """Final user and item embeddings (graph view) from the current parameters, without edge dropout."""
-        E_u, E_i, _, _ = self.propagate(dropout=0.0)
-        return E_u, E_i
+        E_u_list, E_i_list = self.graph_layers(dropout=0.0)
+        return sum(E_u_list), sum(E_i_list)
 
     @torch.no_grad()
     def predict(self, uids, exclude_seen=True):
@@ -74,8 +86,8 @@ class LightGCL(nn.Module):
     uses_negatives = True  # training feeds one sampled negative item per positive
 
     def contrastive_loss(self, E_u, E_i, G_u, G_i, uids, iids):
-        neg_score = torch.log(torch.exp(G_u[uids] @ E_u.T / self.temp).sum(1) + 1e-8).mean()
-        neg_score += torch.log(torch.exp(G_i[iids] @ E_i.T / self.temp).sum(1) + 1e-8).mean()
+        neg_score = log_sum_exp(G_u[uids] @ E_u.T / self.temp).mean()
+        neg_score += log_sum_exp(G_i[iids] @ E_i.T / self.temp).mean()
         pos_score = (torch.clamp((G_u[uids] * E_u[uids]).sum(1) / self.temp, -5.0, 5.0)).mean() + (torch.clamp((G_i[iids] * E_i[iids]).sum(1) / self.temp, -5.0, 5.0)).mean()
         return -pos_score + neg_score
 
@@ -124,3 +136,26 @@ class LightGCLSoftmax(LightGCL):
     def recommendation_loss(self, E_u, E_i, uids, pos, neg):
         """Cross-entropy of each positive item against all items (neg is unused)."""
         return F.cross_entropy(E_u[uids] @ E_i.T, pos)
+
+
+class LightGCLTimeSoftmax(LightGCLSoftmax):
+    """LightGCLSoftmax whose graph view aggregates with the time-aware weights of GraphPro (Yang et al., WWW 2024).
+
+    A neighbor v of node u weighs adj_norm[u, v] / 2 + alpha[u, v] / 2, where alpha is the softmax over u's neighbors
+    of their interaction times scaled to [0, 1], so recent neighbors count more (GraphPro, Eq. 5–6, with adj_norm in
+    place of LightGCN's 1 / sqrt(|N_u| |N_v|)). time_u (users x items) holds alpha over each user's items and time_i
+    (items x users) over each item's users, both with the sparsity of adj_norm. The SVD view and the contrastive loss
+    still use adj_norm alone.
+    """
+
+    def __init__(self, *args, time_u, time_i, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.register_buffer("adj_u", (0.5 * self.adj_norm + 0.5 * time_u).coalesce(), persistent=False)
+        self.register_buffer("adj_i", (0.5 * self.adj_norm.transpose(0, 1) + 0.5 * time_i).coalesce(), persistent=False)
+
+    def graph_layers(self, dropout):
+        E_u_list, E_i_list = [self.E_u_0], [self.E_i_0]
+        for layer in range(1, self.l + 1):
+            E_u_list.append(torch.spmm(sparse_dropout(self.adj_u, dropout), E_i_list[layer - 1]))
+            E_i_list.append(torch.spmm(sparse_dropout(self.adj_i, dropout), E_u_list[layer - 1]))
+        return E_u_list, E_i_list
